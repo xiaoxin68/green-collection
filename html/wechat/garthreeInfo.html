@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>废品列表</title>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Classic Style Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+		function hideURLbar(){ window.scrollTo(0,1); } </script>
+<link href="../../tools/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../../css/wechat/styleone.css" rel="stylesheet" type="text/css" media="all" />
+<script src="../../js/wechat/jquery.min.js"></script>
+<script src="../../js/wechat/simpleCart.min.js"></script>
+<script type="text/javascript" src="../../tools/bootstrap/js/bootstrap-3.1.1.min.js"></script>
+<script type="text/javascript" src="../../tools/bootstrap/js/jquery-2.1.0.js" ></script>
+<script type="text/javascript" src="../../tools/jquery/jquery.form.min.js"></script>
+</head>	
+<body>
+		<div class="product">
+			<div class="container">			
+			<div class="sellers animated wow fadeInUp" data-wow-delay=".5s">
+					<h3 class="best"  style="background-color:deepskyblue" onclick="window.history.back(-1)";>废品列表</h3>
+					<div class="product-head" id="sec">
+					<!--<div class="product-go">
+						<div class=" fashion-grid">
+									<a href="single.html"><img class="img-responsive" src="{{firstgarbage.photopath}}" alt=""></a>
+								</div>
+							<div class=" fashion-grid1">
+								<h6 class="best2"><a href="single.html">{{firstgarbage.name}}</a></h6>
+							<!--	<span class=" price-in1">{{firstgarbage.}}</span>-->
+						<!--		<p>{{firstgarbage.description}</p>-->
+						<!--	</div>	-->
+<!--							<div class="clearfix"> </div>-->
+					</div>	
+					
+
+			</div>
+			</div class="clearfix"></div>
+			</div>			
+	</div>
+	
+	
+	<script>
+		window.onload = function(){
+			//获取参数id
+			var s=location.search.substring(1);
+			var myArray=new Array();
+			myArray=s.split("=");
+			var id=myArray[1];
+	        $.get("http://192.168.1.142:9000/garbage/queryGarbageListBySid/"+id,
+			function(data) {
+				 $.each(data, function (index, item) { 
+					 var seid = data[index].id; 
+			         var path = data[index].photopath; 
+			         var garbagename = data[index].garbagename; 
+			         var price=data[index].price; 
+			         var description = data[index].description; 
+			        $("#sec").append("<div class=\"product-go\"><div class=\" fashion-grid\"><a href=\"\"><img class=\"img-responsive\" style=\"width:75px\" src=\""+path+
+		         "\" alt=\"\"></a></div><div class=\"fashion-grid1\"><h6 class=\"best2\"><a href=\"javascript:ViewSecond("+seid+
+		         ")\">"+garbagename+"</a></h6><span class=\"price-in1\">单价："+price+"</span><p>"+description+"</p></div>"+"<div class=\"clearfix\"> </div></div>");
+	    }); 	
+			}
+		)
+}
+
+	</script>
+</body>
+</html>

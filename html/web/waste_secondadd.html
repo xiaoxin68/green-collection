@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>添加废品信息</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../tools/layui/css/layui.css"  media="all">
+  <script src="../../tools/layui/layui.js" charset="utf-8"></script>
+  <script src="../../js/web/waste_add.js" charset="utf-8"></script>
+</head>
+<body>
+          
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+	<div style="float:left;margin-left: 250px;">
+		<h1>添加二级废品信息</h1>
+	</div>
+<div class="layui-btn-group" style="float:right">		
+			<button class="layui-btn" id="first_add" onclick="first_add()"><i class="layui-icon">&#xe608;</i>一级</button>
+			<button class="layui-btn" id="second_add" onclick="three_add()"><i class="layui-icon">&#xe608;</i>三级</button>
+</div>
+</fieldset>
+<!--<select name="firstId" id="first">
+    <option value="" disabled selected>第一级废品类别</option>
+</select>-->
+<div id="secondgarbage_add">
+	<form class="layui-form" action="" id="second2_add">
+		<div class="layui-form-item">
+		<label class="layui-form-label">废品选择</label>
+    <div class="layui-input-inline">
+      <select name="firstId" id="first">
+        <option value="" disabled selected>第一级废品类别</option>
+      </select>
+    </div>
+    </div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label">名称</label>
+		    <div class="layui-input-block">
+		       <input style="width:150px" type="text" name="secondname" required  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+		    </div>
+		</div>
+		<!--<div class="layui-form-item">
+		    <label class="layui-form-label">照片文件</label>
+		    <div class="layui-input-block">
+		       <input style="width:150px" type="text" name="photoPath" required  lay-verify="required" placeholder="上传文件" autocomplete="off" class="layui-btn">
+		    </div>
+		</div>-->
+		<div class="layui-form-item">
+				<label class="layui-form-label">图片</label>
+				<div id="preview" class="layui-input-block">
+					<img id="imghead" border="0" src="../../img/web/update.png" width="90" height="90" onclick="$('#previewImg').click();">
+				</div>
+				<input type="file" name="photopath" required="required" onchange="previewImage(this)"  style="display: none;" id="previewImg" >
+			</div>
+		<div class="layui-form-item layui-form-text">
+		    <label class="layui-form-label">描述</label>
+		    <div class="layui-input-block">
+		      <textarea placeholder="请输入内容" class="layui-textarea" name="description"></textarea>
+		    </div>
+		 </div>
+		<div class="layui-form-item">
+	    <div class="layui-input-block">
+	      <button class="layui-btn" lay-submit="" lay-filter="demo1" id="secondgarbage" onclick="second_submit()">立即提交</button>
+	      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	    </div>
+	  </div>
+	</form>
+</div>
+
+<script src="../../tools/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../tools/bootstrap/js/jquery-2.1.0.js" ></script>
+<script type="text/javascript" src="../../tools/jquery/jquery.form.min.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+layui.use(['form', 'layedit', 'laydate'], function(){
+  var form = layui.form
+  
+  $.get("http://192.168.1.142:9000/garbage/queryFirstGarbageList" ,
+	function(data) {	 
+				 $.each(data, function (index, item) {  
+	       var id = data[index].id; 
+	       var firstname = data[index].firstname; 
+	     $("#first").append("<option value='"+id+"'>"+firstname+"</option>");
+	     form.render();  //应该放在循环中间，要不然错误
+//	       $("#first").append("<option value='11'>111</option>");
+    }); 
+	});
+ 	
+
+
+  //自定义验证规则
+  form.verify({
+    title: function(value){
+      if(value.length < 5){
+        return '标题至少得5个字符啊';
+      }
+    }
+    ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+    ,content: function(value){
+      layedit.sync(editIndex);
+    }
+  });
+  
+});
+
+</script>
+
+<script>
+//重新渲染表单
+
+function first_add(){
+	window.location.href="../web/waste_firstadd.html";
+}
+function three_add(){
+	window.location.href="../web/waste_add.html";
+}
+function second_submit(){	
+		var options = {
+		type: 'post',
+		url: 'http://192.168.1.142:9000/garbage/addSecond',
+		success: function(ret) {
+			layui.layer.msg('添加成功！！');
+			setTimeout("window.parent.location.reload()", 1000);
+		},
+		error: function(ret) {
+			layer.msg('添加失败，请确认信息');
+		}
+	};
+		$('#second2_add').ajaxSubmit(options);
+}
+</script>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="format-detection" content="telephone=no" />
+		<link rel="stylesheet" href="../../../tools/layui/css/layui.css" />
+		<link rel="stylesheet" href="../../../tools/layui/css/layui.mobile.css" />
+		<script type="text/javascript" src="../../../tools/layui/layui.js"></script>
+		<title>订单信息</title>
+	</head>
+	<body>
+		<ul class="layui-nav" lay-filter="">
+			<li class="layui-nav-item layui-this">
+				<a href="">首页</a>
+			</li>
+			<li class="layui-nav-item">
+				<a href="javascript:;">个人</a>
+				<dl class="layui-nav-child">
+					<!-- 二级菜单 -->
+					<dd>
+						<a href="">个人信息</a>
+					</dd>
+					<dd>
+						<a href="">订单信息</a>
+					</dd>
+					<dd>
+						<a href="">账户信息</a>
+					</dd>
+				</dl>
+			</li>
+			<li class="layui-nav-item">
+				<a href="">发起订单</a>
+			</li>
+		</ul>
+		<script>
+			//注意：导航 依赖 element 模块，否则无法进行功能性操作
+			layui.use('element', function() {
+				var element = layui.element;
+
+				//…
+			});
+		</script>
+		
+		
+		
+	</body>
+</html>

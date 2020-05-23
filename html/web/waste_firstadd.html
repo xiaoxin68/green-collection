@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>添加废品信息</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../tools/layui/css/layui.css"  media="all">
+  <script src="../../tools/layui/layui.js" charset="utf-8"></script>
+  <script src="../../js/web/waste_add.js" charset="utf-8"></script>
+</head>
+<body>
+          
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+	<div style="float:left;margin-left: 250px;">
+		<h1>添加一级废品信息</h1>
+	</div>
+<div class="layui-btn-group" style="float:right">		
+			<button class="layui-btn" id="first_add" onclick="second_add()"><i class="layui-icon">&#xe608;</i>二级</button>
+			<button class="layui-btn" id="second_add" onclick="three_add()"><i class="layui-icon">&#xe608;</i>三级</button>
+</div>
+</fieldset>
+	<form class="layui-form" action="" id="first1_add">
+		<div class="layui-form-item">
+		    <label class="layui-form-label">名称</label>
+		    <div class="layui-input-block">
+		       <input style="width:150px" type="text" name="firstname" required  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+		    </div>
+		</div>
+		<!--<div class="layui-form-item">
+		    <label class="layui-form-label">图片</label>
+		    <div class="layui-input-block">
+		       <button type="button" class="layui-btn" id="test1" onclick="$('#previewImg').click();">
+  							<i class="layui-icon">&#xe67c;</i>上传图片
+					 </button>
+					 <input id="path"></input>
+		    </div>
+		</div>-->
+		<div class="layui-form-item">
+				<label class="layui-form-label">图片</label>
+				<div id="preview" class="layui-input-block">
+					<img id="imghead" border="0" src="../../img/web/update.png" width="90" height="90" onclick="$('#previewImg').click();">
+				</div>
+				<input type="file" name="photopath" required="required" onchange="previewImage(this)"  style="display: none;" id="previewImg" >
+			</div>
+		<div class="layui-form-item layui-form-text">
+		    <label class="layui-form-label">描述</label>
+		    <div class="layui-input-block">
+		      <textarea placeholder="请输入内容" class="layui-textarea" name="description"></textarea>
+		    </div>
+		 </div>
+		<div class="layui-form-item">
+	    <div class="layui-input-block">
+	      <button class="layui-btn" lay-submit="" lay-filter="demo1" id="firstgarbage" onclick="first_submit()">立即提交</button>
+	      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	    </div>
+	  </div>
+	</form>
+
+<script src="../../tools/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../tools/bootstrap/js/jquery-2.1.0.js" ></script>
+<script type="text/javascript" src="../../tools/jquery/jquery.form.min.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+layui.use(['form', 'layedit', 'laydate'], function(){
+  var form = layui.form
+ 
+  //自定义验证规则
+  form.verify({
+    title: function(value){
+      if(value.length < 5){
+        return '标题至少得5个字符啊';
+      }
+    }
+    ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+    ,content: function(value){
+      layedit.sync(editIndex);
+    }
+  });
+  
+  
+		 
+ 
+});
+</script>
+<script>
+		layui.use('upload', function(){
+		  var upload = layui.upload;		   
+		  //执行实例
+		  var uploadInst = upload.render({
+		    elem: '#test1' //绑定元素
+		    ,url: '/upload/' //上传接口
+		    ,done: function(res){
+		      //上传完毕回调
+		    }
+		    ,error: function(){
+		      //请求异常回调
+		    }
+		  });
+		});
+</script>
+<script>
+function second_add(){
+	window.location.href="../web/waste_secondadd.html";
+}
+function three_add(){
+	window.location.href="../web/waste_add.html";
+}
+
+function first_submit(){	
+		var options = {
+		type: 'post',
+		url: 'http://192.168.1.142:9000/garbage/addFirst',
+		success: function(ret) {
+			layui.layer.msg('添加成功！！');
+			setTimeout("window.parent.location.reload()", 1000);
+		},
+		error: function(ret) {
+			layer.msg('添加失败，请确认信息');
+		}
+	};
+		$('#first1_add').ajaxSubmit(options);
+}
+
+</script>
+</body>
+</html>

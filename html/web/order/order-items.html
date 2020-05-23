@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+		<title>订单详情</title>
+		<link rel="stylesheet" href="../../../tools/bootstrap/css/bootstrap.min.css">
+		<style type="text/css">
+			header {
+				padding-top: 20px;
+				padding-bottom: 10px;
+				font-size: large;
+				border-bottom: 1px solid #ccc;
+			}
+			
+			.list-row {
+				margin-top: 10px;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				border-bottom: 1px solid #cccccc;
+			}
+			
+			.itemTitle {
+				/*margin-bottom: 20px;*/
+				margin: 10px;
+			}
+			
+			.price {
+				margin-left: 20px;
+				margin-right: 20px;
+				color: #f4191c;
+			}
+			
+			.changeBtn {
+				margin-left: 20px;
+			}
+			
+			.weight {
+				margin-left: 20px;
+				padding: 0 10px;
+				border: 1px solid #cccccc;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header id="header" class="container">
+			<div class="row">
+				<div><span onclick="backToOrderList();" class="pull-left glyphicon glyphicon-chevron-left" style="padding-left: 5px;">返回</span></div>
+				<div align="center">
+					<strong>订单列表~&emsp; &emsp; </strong>
+				</div>
+			</div>
+
+			<!--<img id="logo" src="../img/logo.png">-->
+		</header>
+
+		<div class="container" id="itemList">
+			<div class="media list-row">
+				<div class="media-left media-middle">
+					<img class="media-object" src="../../../img/trash/g1.png" alt="...">
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading itemTitle">旧纸板</h4>
+					<div class="text-muted">ID:<span>201522111920</span></div>
+					<div class="text-muted">单价:<span class="price">5</span>￥/kg</div>
+					<div class="text-muted">重量:<span class="weight">10.5</span></div>
+				</div>
+			</div>
+
+			<div class="media list-row">
+				<div class="media-left media-middle">
+					<img class="media-object" src="../../../img/trash/g1.png" alt="...">
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading itemTitle">废铁</h4>
+					<div class="text-muted">ID:<span>201522111922</span></div>
+					<div class="text-muted">单价:<span class="price">7.5</span>￥/kg</div>
+					<div class="text-muted">重量:<span class="weight">8</span></div>
+				</div>
+			</div>
+
+		</div>
+
+
+		<script src="../../../tools/jquery/jquery-3.3.1.min.js"></script>
+		<script src="../../../tools/bootstrap/js/bootstrap.min.js"></script>
+		<script src="../../../tools/layui/layer_mobile/layer.js"></script>
+		<script src="../../../js/web/util.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				reHeight(); //调整高度
+			})
+
+			function reHeight() {
+				var footerHeight = $(".buttomItem").height() * 2 + 30 + 20 + 10;
+				$("#itemList").css("margin-bottom", footerHeight + 10 + 'px');
+
+			}
+			
+			function backToOrderList(){
+				window.location.href="order-list.html";
+			}
+			
+			function finishOrder(){
+				window.location.href="order-completed.html";
+			}
+
+			function goAddOrderItem() {
+				var html = "<div class=\"container\"><form class=\"form-horizontal\" role=\"form\"><div class=\"form-group\"><label for=\"firstname\" class=\"col-sm-2 control-label\">垃圾ID</label><div class=\"col-sm-10\"><input type=\"text\" id=\"garbageId\" class=\"form-control\" id=\"firstname\" placeholder=\"请输入垃圾ID\"></div></div><div class=\"form-group\"><label for=\"lastname\" class=\"col-sm-2 control-label\">垃圾重量</label><div class=\"col-sm-10\"><input type=\"text\" id=\"garbageWeight\" class=\"form-control\" id=\"lastname\" placeholder=\"请输入垃圾重量\"></div></div></form></div>"
+
+				layer.open({
+					type: 1,
+					content: html,
+					//					title:"修改重量",
+					className: 'container',
+					btn: ["确定", "取消"],
+					yes: function(index) {
+						var garbageId = $("#garbageId").val().trim();
+						var garbageWeight = $("#garbageWeight").val().trim();
+						var pattern = /^\d{1,4}(\.\d{1,2}){0,1}$/;
+						if(!pattern.test(garbageWeight)) {
+							layer.open({
+								skin: 'msg',
+								content: '格式有误',
+								time: 2
+							});
+						} else {
+							console.log(garbageId + "  " + garbageWeight);
+							var orderId = GetUrlParam("orderId");
+							addOrderItemToUI(garbageId,garbageWeight);
+							
+//							$.ajax({
+//								url: "/123456/addOrderItem",
+//								type: "POST",
+//								data: {
+//									orderId: orderId,
+//									garbageId: garbageId,
+//									garbageWeight: garbageWeight
+//								},
+//								error: function(req) {
+//									console.log(req);
+//									layer.closeAll();
+//									layer.open({
+//										content: '出现错误',
+//										btn: ['确定']
+//									});
+//								},
+//								success: function(data) {
+//									layer.closeAll();
+//									if(data.status == 0) {
+//										layer.open({
+//											content: '添加成功',
+//											time: 2,
+//											skin: 'msg'
+//										});
+//									}
+//									if(data.status == -1) {
+//										layer.open({
+//											content: data.message,
+//											skin: 'msg',
+//											time: 2
+//										});
+//									}
+//								}
+//							});
+						}
+						layer.close(index);
+
+					},
+					no: function(index) {
+						layer.closeAll();
+					}
+				});
+				//				window.location="#";
+			}
+
+			function addOrderItemToUI(garbageId, garbageWeight) {
+				var html = "<div class=\"media list-row\">" +
+					"<div class=\"media-left media-middle\"><img class=\"media-object\" src=\"../../../img/trash/g1.png\" alt=\"...\"></div>" +
+					"<div class=\"media-body\">" +
+					"<h4 class=\"media-heading itemTitle\">废铁</h4>" +
+					"<div class=\"text-muted\">ID:<span>"+garbageId+ "</span></div>" +
+					"<div class=\"text-muted\">单价:<span class=\"price\">7.5</span>￥/kg</div>" +
+					"<div class=\"text-muted\">重量:<span class=\"weight\" onclick=\"changeWeight(this);\">"+garbageWeight+"</span></div></div></div>";
+				$("#itemList").append(html);
+			}
+
+			function addGarbageId() {
+
+			}
+
+			function changeWeight(obj) {
+				var html = '<div class="container"><div class="input-group" style="padding:20px 20px;">' +
+					'<span class="input-group-addon">kg：</span>' +
+					'<input id="weightInput" type="text" class="form-control" placeholder="请输入重量:xxxx.xx">' +
+					'</div></div>';
+				var pattern = /^\d{1,4}(\.\d{1,2}){0,1}$/;
+				layer.open({
+					type: 1,
+					content: html,
+					//					title:"修改重量",
+					className: 'container',
+					btn: ["确定", "取消"],
+					yes: function(index) {
+						var weight = $("#weightInput").val().trim();
+						console.log(weight);
+						if(pattern.test(weight)) {
+							//							console.log(obj);
+							$(obj).html(weight);
+							layer.closeAll();
+						} else {
+							layer.close(index);
+							layer.open({
+								skin: 'msg',
+								time: 2,
+								content: '输入格式有误'
+							});
+						}
+
+					},
+					no: function(index) {
+						layer.close(index);
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

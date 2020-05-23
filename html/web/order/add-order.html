@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+		<title>添加订单</title>
+		<link rel="stylesheet" href="../../../tools/bootstrap/css/bootstrap.min.css">
+		<style type="text/css">
+			header {
+				padding-top: 20px;
+				padding-bottom: 10px;
+				font-size: large;
+				border-bottom: 1px solid #ccc;
+			}
+			
+			.list-row {
+				margin-top: 10px;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				border-bottom: 1px solid #cccccc;
+			}
+			
+			.tarsh-img {
+				max-width: 100px;
+			}
+			
+			.trash-title {
+				margin-bottom: 20px;
+				/*border-bottom: 1px solid #cccccc;*/
+			}
+			
+			.weight {
+				margin-left: 20px;
+				padding-left: 10px;
+				padding-right: 10px;
+				border: 1px solid #cccccc;
+			}
+			
+			.weight-unit {
+				margin-left: 20px;
+			}
+			
+			.price {
+				margin-left: 20px;
+				color: #f4191c;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header id="header" class="container">
+			<div class="row">
+				<div><span class="pull-left glyphicon glyphicon-chevron-left" style="padding-left: 5px;">返回</span></div>
+				<div align="center">
+					<strong>添加订单~&emsp; &emsp; </strong>
+				</div>
+			</div>
+
+			<!--<img id="logo" src="../img/logo.png">-->
+		</header>
+
+		<div class="container" id="trashList">
+			<div class="media list-row">
+				<div class="media-left media-middle">
+					<a href="#">
+						<img class="media-object tarsh-img" src="../../../img/trash/g1.png" alt="绿色环保">
+					</a>
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading trash-title">废铁</h4>
+					<div class="text-muted">重量: <span class="weight" onclick="changeWeight(this);">10</span></div>
+					<div class="text-muted">重量单位: <span class="weight-unit">kg</span></div>
+					<div class="text-muted">价格:<span class="price">88.50</span>￥</div>
+				</div>
+			</div>
+			<div class="media list-row">
+				<div class="media-left media-middle">
+					<a href="#">
+						<img class="media-object tarsh-img" src="../../../img/trash/g2.png" alt="绿色环保">
+					</a>
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading trash-title">塑料瓶</h4>
+					<div class="text-muted">重量: <span class="weight" onclick="changeWeight(this);">2</span></div>
+					<div class="text-muted">重量单位: <span class="weight-unit">kg</span></div>
+					<div class="text-muted">价格:<span class="price">30.30</span>￥</div>
+				</div>
+			</div>
+			<div class="media list-row">
+				<div class="media-left media-middle">
+					<a href="#">
+						<img class="media-object tarsh-img" src="../../../img/trash/g3.png" alt="绿色环保">
+					</a>
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading trash-title">旧书</h4>
+					<div class="text-muted">重量: <span class="weight" onclick="changeWeight(this);">15</span></div>
+					<div class="text-muted">重量单位: <span class="weight-unit">kg</span></div>
+					<div class="text-muted">价格:<span class="price">50.50</span>￥</div>
+				</div>
+			</div>
+
+
+		</div>
+
+		<footer id="footer">
+			<!--结算或保存-->
+			<div class="main_nav_bottom">
+				<nav class="navbar navbar-default navbar-fixed-bottom">
+					<div class="col-md-12 col-sm-12 col-xs-12 buttomItem " align="center">
+						<h4><span>总共:￥</span><span id="totalPrice" class="pull-right" style="color: #f4191c;">169.3</span></h4>
+					</div>
+					<div class="col-md-12 col-sm-12 col-xs-12 buttomItem" align="center" style="margin-bottom: 20px;">
+						<button id="orderBtn" onclick="addOrder();" type="button" class="btn btn-primary btn-lg btn-block">提交订单</button>
+					</div>
+				</nav>
+			</div>
+		</footer>
+
+		<script src="../../../tools/jquery/jquery-3.3.1.min.js"></script>
+		<script src="../../../tools/bootstrap/js/bootstrap.min.js"></script>
+		<script src="../../../tools/layui/layer_mobile/layer.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				reHeight(); //调整高度
+			})
+			
+			function addOrder(){
+				layer.open({
+					content:"添加成功",
+					btn:["确定"],
+					yes:function(index){
+						layer.closeAll();
+						window.location.href="add-order.html";
+					}
+				});
+			}
+
+			function reHeight() {
+				var footerHeight = $(".buttomItem").height() * 2 + 30 + 20 + 10;
+				$("#trashList").css("margin-bottom", footerHeight + 10 + 'px');
+
+			}
+
+			function changeWeight(obj) {
+				var html = '<div class="container"><div class="input-group" style="padding:20px 20px;">' +
+					'<span class="input-group-addon">kg：</span>' +
+					'<input id="weightInput" type="text" class="form-control" placeholder="请输入重量:xxxx.xx">' +
+					'</div></div>';
+				var pattern = /^\d{1,4}(\.\d{1,2}){0,1}$/;
+				layer.open({
+					type: 1,
+					content: html,
+//					title:"修改重量",
+//					className:'container',
+					btn:["确定","取消"],
+					yes:function(index){
+						var weight = $("#weightInput").val().trim();
+						console.log(weight);
+						if(pattern.test(weight)){
+//							console.log(obj);
+							$(obj).html(weight);
+							layer.closeAll();
+						} else {
+							layer.close(index);
+							layer.open({
+								skin:'msg',
+								time:2,
+								content:'输入格式有误'
+							});
+						}
+						
+					},
+					no:function(index){
+						layer.close(index);
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

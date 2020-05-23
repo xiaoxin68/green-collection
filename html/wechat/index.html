@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="../../tools/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../css/wechat/index.css" />
+		<script type="text/javascript" src="../../tools/layui/layui.js"></script>
+		<script type="text/javascript" src="../../tools/common/js/vue.js"></script>
+		<title>资源回收 O2O 平台</title>
+	</head>
+	<body>
+		<!--轮播图-->
+		<div class="z_lbt">
+			<div class="layui-carousel" id="lbt">
+				<div carousel-item>
+					<div v-for="(items, index) in info">
+						<div v-bind:id="items.id" onclick="viewCarouselDetailById(this.id)" style="width: 100%;height: 100%;">
+							<img style="width: 100%;height: 100%;" v-bind:src="['http://192.168.1.119:8018/'+items.photoPath]" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--通知-->
+		<div class="z_news_bg">
+			<!--图片-->
+			<div class="z_news_img">
+				<img src="../../img/wechat/announce.png" />
+			</div>
+
+			<!--通知内容-->
+			<div class="z_news">
+				<div class="layui-carousel" id="news">
+					<div carousel-item>
+						<div v-for="(items, index) in info">
+							<div v-bind:id="items.announceId" onclick="viewNewsDetailById(this.id)">
+								<p>通知公告：{{items.announceTitle}}</p>
+								<p>发布时间：{{items.createTime}}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--横放功能选项-->
+		<div class="z_items_bg">
+			<div class="z_item_header">
+				<p>热门</p>
+			</div>
+			<div class="z_item">
+				<a href="./content/content_news.html?page=1&size=6">
+					<img src="../../img/wechat/news.png" />
+					<span>O2O新闻<i class="layui-icon">&#xe602;</i>  </span>
+				</a>
+			</div>
+			<div class="z_item">
+				<a href="./content/content_announce.html?page=1&size=6">
+					<img src="../../img/wechat/tongzhi.png" />
+					<span>通知公告<i class="layui-icon">&#xe602;</i>  </span>
+				</a>
+			</div>
+			<div class="z_item">
+				<a href="javascript:;">
+					<img src="../../img/wechat/rel.png" />
+					<span>资源回收<i class="layui-icon">&#xe602;</i>  </span>
+				</a>
+			</div>
+		</div>
+
+		<!--图标功能选项-->
+		<div class="z_icon_bg">
+			<div class="z_item_header">
+				<p>功能</p>
+			</div>
+			<div class="z_icon">
+				<a href="../web/order/order-list.html" class="z_icon_img_text">
+					<img class="z_icon_img" src="../../img/wechat/icon.png" />
+					<p class="z_icon_text">
+						我的订单
+					</p>
+				</a>
+				<a href="../wechat/garfirstInfo.html" class="z_icon_img_text">
+					<img class="z_icon_img" src="../../img/wechat/info.png" />
+					<p class="z_icon_text">废品信息</p>
+				</a>
+				<a href="javascript:;" class="z_icon_img_text_last">
+					<img class="z_icon_img" src="../../img/wechat/selfinfo.png" />
+					<p class="z_icon_text">信息管理</p>
+				</a>
+			</div>
+			<div class="z_icon">
+				<a href="../wechat/garfirstInfo.html" class="z_icon_img_text">
+					<img class="z_icon_img" src="../../img/wechat/person.png" />
+					<p class="z_icon_text">个人信息</p>
+				</a>
+				<a href="officer_wechat.html" class="z_icon_img_text">
+					<img class="z_icon_img" src="../../img/wechat/call.png" />
+					<p class="z_icon_text">客服</p>
+				</a>
+				<a href="backfeed.html" class="z_icon_img_text_last">
+					<img class="z_icon_img" src="../../img/wechat/trust.png" />
+					<p class="z_icon_text">反馈</p>
+				</a>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="../../tools/layui/layui.js"></script>
+		<script type="text/javascript" src="../../tools/bootstrap/js/jquery-2.1.0.js"></script>
+		<script type="text/javascript" src="../../js/wechat/index.js"></script>
+	<script>
+		layer.msg('删除成功');
+				
+	</script>	
+		<script type="text/javascript" src="../../js/wechat/index.js"></script>
+	<script>
+		layer.msg('删除成功');
+	</script>	
+		<script type="text/javascript" src="../../js/wechat/index.js"></script>	
+	</body>
+</html>

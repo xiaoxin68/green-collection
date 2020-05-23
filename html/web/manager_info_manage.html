@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="../../tools/layui/css/layui.css" media="all">
+		<title>管理员管理</title>
+	</head>
+	<body>
+
+		<!--管理员数据分页显示-->
+		<div  style="width: 95%;margin: 0 auto;">
+			<table class="layui-hide" id="manager_info_manager" lay-filter="manager_info_manager_filter"></table>
+		</div>
+		<!--状态展示 -->
+		<script type="text/html" id="status">
+		    {{#  if(d.isLocked == 1){ }}
+		    <i class="layui-icon" style="color: #1E9FFF;">管理员</i>
+		    {{#  } }}
+		    {{#  if(d.isLocked == 2){ }}
+		    <i class="layui-icon">&#xe606;已冻结</i>
+		    {{#  } }}
+		</script>
+		
+		<!--操作-->
+		<script type="text/html" id="barDemo">	
+			{{#  if(d.isLocked == 1){ }}
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="manager_lock">冻结</a>
+			{{#  } }}
+			{{#  if(d.isLocked == 2){ }}
+			<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="manager_unlock">启用</a>
+			{{#  } }}	  
+			<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="manager_delete">删除</a>	
+			{{#  if(d.isLocked == 2){ }}
+		   	<a class="layui-btn layui-btn-xs layui-btn-disabled">取消管理身份</a>	
+		    {{#  } }}
+		    {{#  if(d.isLocked != 2){ }}
+		   	<a class="layui-btn layui-btn-xs" lay-event="manager_update">取消管理身份</a>	
+		    {{#  } }}
+		</script>
+		
+		<!--引入的js -->
+		<script type="text/javascript" src="../../tools/layui/layui.js"></script>
+		<script type="text/javascript" src="../../tools/bootstrap/js/jquery-2.1.0.js" ></script>
+		<script type="text/javascript" src="../../js/web/manager_info_manage.js"></script>
+
+		
+	</body>
+</html>

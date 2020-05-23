@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="../../tools/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../css/web/content_lbt.css" />
+		<title></title>
+	</head>
+
+	<body>
+		<form enctype="multipart/form-data" id="myForm">
+			<div class="layui-form-item">
+				<label class="layui-form-label">上传图片</label>
+				<div id="preview" class="layui-input-block">
+					<img id="imghead" border="0" src="../../img/web/update.png" width="90" height="90" onclick="$('#previewImg').click();">
+				</div>
+				<input type="file" name="file" required="required" onchange="previewImage(this)"  style="display: none;" id="previewImg" >
+			</div>
+			<input type="hidden" name="posterId" value="1001" class="layui-input" />
+			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label">描述信息</label>
+				<div class="layui-input-block">
+					<textarea name="description"  placeholder="请输入内容" id="z_textarea" required class="layui-textarea"></textarea>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<input type="button" class="layui-btn" value="提交" id="z_submit"/>
+					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				</div>
+			</div>
+		</form>
+
+		<script type="text/javascript" src="../../tools/layui/layui.js"></script>
+		<script type="text/javascript" src="../../tools/bootstrap/js/jquery-2.1.0.js"></script>
+		<script type="text/javascript" src="../../tools/jquery/jquery.form.min.js"></script>
+		<script type="text/javascript" src="../../js/web/content_lbt.js"></script>
+	</body>
+
+</html>

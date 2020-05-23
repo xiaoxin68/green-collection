@@ -1,0 +1,50 @@
+.lable
+{
+	width: 22%;
+}
+.input
+{
+	width: 44.66666667%;
+}
+.check
+{
+	padding-right: 0px;
+}
+.row
+{
+    padding: 15px 0px;
+    margin: 0px 30px;
+    border-bottom-style:solid;
+    border-bottom-color:#D0D0D0;
+    border-bottom-width:2px;
+    font-size: 14px;
+}
+
+.row .lable p
+{
+    margin-top: 3px;
+    margin-bottom: -3px;
+    font-weight: 900;
+   
+}
+.row .input p
+{
+    margin-top: 4px;
+    margin-bottom: -4px;
+   
+    color: grey;
+}
+input
+{
+    border: none;
+    padding-top: 2px;
+    
+}
+
+
+
+div.check .btn-save, div.check .btn-cancel
+{
+    display:none;
+}
+

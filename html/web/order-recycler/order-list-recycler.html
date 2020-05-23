@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+		<title>查看订单</title>
+		<link rel="stylesheet" href="../../../tools/bootstrap/css/bootstrap.min.css">
+		<style type="text/css">
+			header {
+				padding-top: 20px;
+				padding-bottom: 10px;
+				font-size: large;
+				border-bottom: 1px solid #ccc;
+			}
+			header {
+				padding-top: 20px;
+				padding-bottom: 10px;
+				font-size: large;
+				border-bottom: 1px solid #ccc;
+			}
+			.list-row {
+				margin-top: 10px;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				border-bottom: 1px solid #cccccc;
+			}
+			.itemTitle{
+				/*margin-bottom: 20px;*/
+				margin: 10px;
+			}
+			.price{
+				margin-left: 20px;
+				color: #f4191c;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header id="header" class="container">
+			<div class="row">
+				<div><span onclick="backToIndex();" class="pull-left glyphicon glyphicon-chevron-left" style="padding-left: 5px;">返回</span></div>
+				<div align="center">
+					<strong>查看订单~&emsp; &emsp; </strong>
+				</div>
+			</div>
+
+			<!--<img id="logo" src="../img/logo.png">-->
+		</header>
+
+		<div class="container" id="orderList">
+			<div class="media list-row" onclick="orderDeatil();">
+				<div class="media-left media-middle">
+					<img class="media-object" src="../../../img/trash/g1.png" alt="...">
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading itemTitle">订单号:<span>19970509</span></h4>
+					<div class="text-muted">用户ID:<span>201522111920</span></div>
+					<div class="text-muted">订单金额:<span class="price">180.5</span>￥</div>
+					<div class="text-muted">2018-4-3 12:02</div>
+					<div class="text-muted">
+						待回收
+					</div>
+				</div>
+			</div>
+
+			<div class="media list-row" onclick="orderDeatil();">
+				<div class="media-left media-middle">
+					<img class="media-object" src="../../../img/trash/g1.png" alt="...">
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading itemTitle">订单号:<span>19970508</span></h4>
+					<div class="text-muted">回收员ID:<span>201522111920</span></div>
+					<div class="text-muted">订单金额:<span class="price">180.5</span>￥</div>
+					<div class="text-muted">2018-4-2 16:32</div>
+					<div class="text-muted">待回收</div>
+				</div>
+			</div>
+		</div>
+		<footer id="footer">
+
+		</footer>
+
+		<script src="../../../tools/jquery/jquery-3.3.1.min.js"></script>
+		<script src="../../../tools/bootstrap/js/bootstrap.min.js"></script>
+		<script src="../../../tools/layui/layer_mobile/layer.js"></script>
+		<script type="text/javascript">
+			$(function() {
+
+			})
+			
+			function orderDeatil(){
+				window.location.href="order-items-list.html";
+			}
+			
+			function backToIndex(){
+				window.location.href="../../wechat/index-collector.html";
+			}
+		</script>
+	</body>
+
+</html>

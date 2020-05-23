@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="divport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="../../../tools/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../../css/wechat/content_news.css" />
+		<script type="text/javascript" src="../../../tools/common/js/vue.js"></script>
+		<title>资源回收 O2O 平台</title>
+	</head>
+	<!--顶部-->
+	<div class="z_top">
+		<i style="font-size: 50px;line-height: 100px;" class="layui-icon" onclick="window.history.back(-1);">&#xe603;</i>
+		<p style="font-size: 50px;font-weight: bold;line-height: 100px;">新闻</p>
+	</div>
+	<div class="z_blank"></div>
+	<!--新闻简介-->
+	<div id="news">
+		<div v-for="(items, index) in info">
+			<div class="z_news" v-bind:id="items.id" onclick="viewNewsDetailById(this.id)">
+				<p class="z_title">
+					{{items.title}}
+					<span>{{items.subtitle}}</span>
+				</p>
+				<div class="z_img">
+					<img v-bind:src="['http://192.168.1.119:8018/'+items.photoPath]" />
+				</div>
+				<p class="z_time">发布时间：{{items.createTime}}</p>
+				<p class="z_content">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{items.content}}
+				</p>
+			</div>
+		</div>
+		<input id="count" type="hidden" value="" />
+	</div>
+
+	<!--上一页、下一页-->
+	<div class="z_btn">
+		<button class="z_left layui-btn layui-btn-radius layui-btn-primary"> <i class="layui-icon">&#xe65a;</i>上一页</button>
+		<button class="z_right layui-btn layui-btn-radius layui-btn-primary">下一页 <i class="layui-icon">&#xe65b;</i></button>
+	</div>
+
+	<script type="text/javascript" src="../../../tools/layui/layui.js"></script>
+	<script type="text/javascript" src="../../../tools/bootstrap/js/jquery-2.1.0.js"></script>
+	<script type="text/javascript" src="../../../js/wechat/content_news.js"></script>
+	</body>
+	
+</html>

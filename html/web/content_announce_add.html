@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="../../tools/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../css/web/content_announce.css" />
+		<title></title>
+	</head>
+
+	<body>
+		<form enctype="multipart/form-data" id="myForm">
+			<div class="layui-form-item">
+				<label class="layui-form-label">标题</label>
+				<div class="layui-input-block">
+					<input type="text" name="announceTitle" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<input type="hidden" name="posterId" value=""/>
+			<input type="hidden" name="posterName" />
+			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label">内容</label>
+				<div class="layui-input-block">
+					<textarea name="announceContent" required="required" lay-verify="required" placeholder="请输入内容" id="z_textarea"  class="layui-textarea"></textarea>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<input type="button" class="layui-btn" required="required" value="提交" id="z_submit" />
+					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				</div>
+			</div>
+		</form>
+
+		<script type="text/javascript" src="../../tools/layui/layui.js"></script>
+		<script type="text/javascript" src="../../tools/bootstrap/js/jquery-2.1.0.js"></script>
+		<script type="text/javascript" src="../../tools/jquery/jquery.form.min.js"></script>
+		<script type="text/javascript" src="../../js/web/content_announce.js"></script>
+	</body>
+
+</html>

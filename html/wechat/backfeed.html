@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="format-detection" content="telephone=no" />
+		<title>填写反馈</title>
+		<link rel="stylesheet" href="../../tools/layui/css/layui.css" />
+		<script type="text/javascript" src="../../tools/layui/layui.js"></script>
+		<link rel="stylesheet" href="../../css/wechat/backfeed.css" />
+	</head>
+
+	<body>
+		<div class="container">
+			<form class="layui-form" action="">
+				<div class="layui-form-item layui-form-text">
+					<label class="layui-form-label">详细信息</label>
+					<div class="layui-input-block">
+						<textarea name="content" placeholder="请输入内容" class="layui-textarea content"></textarea>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-upload">
+						<button type="button" class="layui-btn layui-btn-normal" id="sendImage">选择文件</button>
+						<button type="button" class="layui-btn" id="send">开始上传</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<script>
+			layui.use('upload', function() {
+				var $ = layui.jquery
+				upload = layui.upload
+
+				//选完文件后不自动上传
+				upload.render({
+					elem: '#sendImage',
+					url: 'http://10.185.155.74:8123/feedback/addOne',
+					auto: false,
+					multiple: true,
+					bindAction: '#send',
+					data: {
+						"content" : $("content").val()
+					},
+					done: function(res) {
+						console.log(res)
+					}
+				});
+			})
+		</script>
+	</body>
+
+</html>

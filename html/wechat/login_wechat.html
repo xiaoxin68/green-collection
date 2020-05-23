@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>登录丨Sharelink</title>
+<link rel="stylesheet" href="../../css/wechat/style.css">
+<body>
+
+<div class="login-container">
+	<h1>登录</h1>
+	
+	<div class="connect">
+		<p>Welcome to the resource recovery o2o platform .</p>
+	</div>
+	
+	<form enctype="multipart/form-data" id="myForm">
+		<div>
+			<input type="text" name="username" class="username" placeholder="用户名" autocomplete="off"/>
+		</div>
+		<div>
+			<input type="password" name="password" class="password" placeholder="密码" oncontextmenu="return false" onpaste="return false" />
+		</div>
+		<input type="hidden" value="" name="openid" id="openid"/>
+		<button id="myButton" type="button">登录</button>
+	</form>
+
+	<a href="register.html">
+		<button type="button" class="register-tis">还有没有账号？</button>
+	</a>
+
+</div>
+
+</body>
+	<script src="http://www.jq22.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="../../js/wechat/common.js"></script>
+	<!--背景图片自动更换-->
+	<script src="../../js/web/log_supersized.3.2.7.min.js"></script>
+	<script src="../../js/web/log_supersized-init.js"></script>
+	<!--表单验证-->
+	<script src="../../js/wechat/jquery.validate.min.js"></script>
+	
+	<script>
+	
+        $('#myButton').click(function () {
+        	
+        	var params = GetRequest();
+			var openid = params['openid'];
+			$('#openid').val(openid);
+        
+            $.post("http://wx.monkeypaixiaoxin.cn/user/login", $('#myForm').serialize(), function(result){
+                
+                if(result.status == 200) {
+                	window.location.href = "index.html?username=" + result.data;
+                }
+                else {
+                	alert(result.msg);
+                	return false;
+                }
+            });
+
+        });
+        
+        //获取页面传递参数
+		function GetRequest() {
+			var url = location.search; //获取url中"?"符后的字串
+			var theRequest = new Object();
+			if(url.indexOf("?") != -1) {
+				var str = url.substr(1);
+				strs = str.split("&");
+				for(var i = 0; i < strs.length; i++) {
+					theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+				}
+			}
+			return theRequest;
+		}
+
+    </script>
+</html>

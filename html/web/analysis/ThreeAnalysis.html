@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="../../../js/web/echarts.min.js"></script>
+</head>
+<!--dataset-->
+<!--option = {
+    legend: {},
+    tooltip: {},
+    dataset: {
+        // 提供一份数据。
+        source: [
+            ['product', '2015', '2016', '2017'],
+            ['Matcha Latte', 43.3, 85.8, 93.7],
+            ['Milk Tea', 83.1, 73.4, 55.1],
+            ['Cheese Cocoa', 86.4, 65.2, 82.5],
+            ['Walnut Brownie', 72.4, 53.9, 39.1]
+        ]
+    },
+    // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
+    xAxis: {type: 'category'},
+    // 声明一个 Y 轴，数值轴。
+    yAxis: {},
+    // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
+    series: [
+        {type: 'bar'},
+        {type: 'bar'},
+        {type: 'bar'}
+    ]
+}-->
+
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;position:absolute;left:0;top:0;bottom: 0;right: 0;margin: auto;"  align="center"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+		// 显示标题，图例和空的坐标轴
+		myChart.setOption({
+		    title: {
+		        text: '一类垃圾回收量'
+		    },
+		    tooltip: {},
+		    toolbox: {
+        	    feature: {
+		            dataView: {show: false, readOnly: false},
+		            magicType: {show: false, type: ['line', 'bar']},
+		            restore: {show: false},
+		            saveAsImage: {show: true}
+		        }
+    		},
+		    legend: {
+		        data:['回收量','近三月平均回收量']
+		    },
+		    xAxis: {
+		        data:[]
+		    },
+		    yAxis: [
+		        {
+		            type: 'value',
+		            name: '回收量',
+		            min: 0,
+		            max: 100,
+		            interval: 20,
+		            axisLabel: {
+		                formatter: '{value}吨'
+		            }
+		        },
+		        {
+		            type: 'value',
+		            name: '近三月平均回收量',
+		            min: 0,
+		            max: 100,
+		            interval: 20,
+		            axisLabel: {
+		                formatter: '{value}吨'
+		            }
+		        }
+    ],
+		    series: [{
+		        name: '回收量',
+		        type: 'bar',
+		        data: [],
+		        itemStyle: {
+                 normal: {
+　　　　　　　　　　　　　　//好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
+                        color: function(params) {
+                            // build a color map as your need.
+                            var colorList = [
+                              '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                               '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                               '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                            ];
+                            return colorList[params.dataIndex]
+                        }
+　　　　　　　　　　　　　　//以下为是否显示，显示位置和显示格式的设置了
+//                      label: {
+//                          show: true,
+//                          position: 'top',
+////                             formatter: '{c}'
+//                          formatter: '{b}\n{c}'
+//                      }
+                    }
+                }		        
+		    },
+	        {
+	            name:'近三月平均回收量',
+	            type:'line',
+	            yAxisIndex: 1,
+	            itemStyle : {  
+	                normal : {  
+	                    color:'#58585a',  
+	                    lineStyle:{  
+	                        color:'#58585a'  
+	                    }  
+	                }  
+	            },  
+	            data:[50,52,41,52,62,80]
+	        }
+	    ]
+		});
+    </script>
+</body>
+</html>
+<script>
+
+function fetchData(cb) {
+    setTimeout(function () {
+        cb({
+            categories: ["纸类","塑料类","金属","玻璃","织物","其他"],
+            data: [5, 20, 36, 10, 10, 20]
+        });
+    }, 1000);
+//	$.get("http://localhost:9999/garbagesys/queryFirstList" ,
+//	  function(data) {	
+//	  	 var name=new Array();
+//	  	 var sum=new Array();
+//	     $.each(data, function (index, item) {  
+//	    	name[index] = data[index].name; 
+//	     	sum[index] = data[index].sum; 
+//  }); 
+//  cb({
+//          categories: [name[0],name[1],name[2],name[3],name[4]],
+//          data: [sum[0],sum[1],sum[2],sum[3],sum[4]]
+//      });
+//	});
+
+}
+
+// 初始 option
+option = {
+    title: {
+        text: '异步数据加载示例'
+    },
+    tooltip: {},
+    legend: {
+        data:['销量']
+    },
+    xAxis: {
+        data: []
+    },
+    yAxis: {},
+    series: [{
+        name: '销量',
+        type: 'bar',
+        data: []
+    }]
+};
+
+fetchData(function (data) {
+    myChart.setOption({
+        xAxis: {
+            data: data.categories
+        },
+        series: [{
+            // 根据名字对应到相应的系列
+            name: '回收量',
+            data: data.data
+        }]
+    });
+});
+</script>

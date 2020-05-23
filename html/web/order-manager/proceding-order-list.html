@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="../../../tools/layui/css/layui.css" />
+		<script src="../../../tools/jquery/jquery-3.3.1.min.js"></script>
+		<!--<script src="../js/jquery.min.js"></script>-->
+		<title>未完成订单</title>
+		<style>
+
+		</style>
+	</head>
+
+	<body style="width: 95%;margin: 0 auto;">
+
+		<!--显示商品列表-->
+		<table class="layui-table" id="displayTable" lay-filter="tableFilter">
+		</table>
+
+		<script src="../../../tools/layui/layui.all.js"></script>
+		<script type="text/html" id="exhibitsDetail">
+			<button onclick="showDetail(this)" value="{{d.id}}" class="layui-btn layui-btn-warm">详情</button>
+		</script>
+
+		<script type="text/html" id="menu">
+			<button type="button" class="layui-btn layui-btn-xs layui-btn-normal" value="{{d.orderId}}" lay-event="distribute" lay-filter="redistributeFilter">重分配</button>
+			<button type="button" class="layui-btn layui-btn-xs layui-btn-danger" value="{{d.orderId}}" lay-event="cancel" lay-filter="cancelOrderFilter">取消</button>
+		</script>
+
+		<script type="text/javascript">
+			layui.use(['layer', 'table', 'element'], function() {
+				var layer = layui.layer;
+				var table = layui.table;
+				var elememt = layui.element;
+				//        $ = layer.$;
+
+				table.render({
+					elem: '#displayTable' //指定原始表格元素选择器
+						,
+					url: 'http://192.168.1.107:9009/manager/listOrders/2',
+					height: 'full-50',
+					page: true,
+					loading: true,
+					even: true, //开启隔行背景
+					cols: [
+						[ //id,exhibitsName,category,mainPhotoPath,intro,creatTime
+							{
+								field: 'orderId',
+								title: '订单号',
+								width: '9%',
+								sort: true
+							},
+							{
+								field: 'recyclerId',
+								title: '回收员ID',
+								width: '10%'
+							},
+							{
+								field: 'userId',
+								title: '用户ID',
+								width: '10%'
+							},
+							{
+								field: 'createTime',
+								title: '创建时间',
+								width: '20%',
+								sort: true
+							},
+							{
+								field: 'orderAmount',
+								title: '金额',
+								width: '10%'
+							},
+							{
+								field: 'description',
+								title: '备注',
+								width: '28%'
+							},
+							{
+								field: 'menu',
+								title: '',
+								width: '10%',
+								templet: '#menu'
+							}
+						]
+					],
+					page: true,
+					request: {
+						pageName: 'page' //页码的参数名称，默认：page
+							,
+						limitName: 'size' //每页数据量的参数名，默认：limit
+					},
+					limit: 10, //每页默认显示数量
+					limits: [10, 20, 30, 40, 50]
+				});
+
+				table.on('tool(tableFilter)', function(obj) {
+					var data = obj.data; //获得当前行数据
+					var layEvent = obj.event; //获得 lay-event 对应的值
+					var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+					var orderId=data.orderId;
+					console.log(orderId);
+					if(layEvent == "distribute") {
+						layer.load(1);
+						layer.msg("确定要重新分配该订单的回收员吗？", {
+							icon: 5,
+							time:0,
+							btn: ["确定", "取消"],
+							yes: function(index) {
+								layer.close(index);
+								$.ajax({
+									type: "get",
+									url: "http://192.168.1.107:9009/manager/orderDistribute",
+									async: true,
+									data: {
+										orderId: orderId
+									},
+									success: function(data) {
+										
+										layer.alert("重新分配成功", {
+											icon: 6,
+											btn:["确定"],
+											yes: function(x) {
+												layer.close(x);
+												window.location.reload();
+											}											
+										});
+										layer.closeAll('loading');
+									}
+								});
+								
+							}
+						});
+						layer.closeAll('loading');
+					}
+
+					if(layEvent == 'cancel') {
+						layer.msg("确定取消吗？", {
+							icon: 5,
+							time: 0,
+							btn: ["确定", "取消"],
+							yes: function(index) {
+								layer.close(index);
+								layer.load(1);
+
+								$.ajax({
+									type: "post",
+									url: "http://192.168.1.107:9009/manager/order/cancel",
+									async: true,
+									data:{orderId:orderId},
+									yes: function (data){
+										layer.msg("取消成功",{
+											icon:6
+											,time:1500
+											
+										});
+									}
+								});
+
+								obj.del();
+								layer.msg("取消订单成功", {
+									icon: 6,
+									time: 1500
+								});
+								layer.closeAll('loading');
+								//								$.ajax({
+								//									url: "/manager/cancelOrder",
+								//									type: "post",
+								//									async: false,
+								//									data: {
+								//										exhibitsId: id
+								//									},
+								//									success: function(data) {
+								//										layer.closeAll('loading');
+								//										if(data.status == 0) {
+								//											layer.msg(data.message, {
+								//												icon: 5,
+								//												time: 3000
+								//											});
+								//										} else {
+								//											obj.del(); //删除该节点
+								//											layer.msg("删除成功!", {
+								//												icon: 6,
+								//												time: 0,
+								//												btn: ["ok"],
+								//												yes: function(index) {
+								//													layer.close(index);
+								//												}
+								//											});
+								//										}
+								//									},
+								//									error: function(request, textStatus, errorThrown) {
+								//										layer.closeAll('loading');
+								//										console.log('删除展品失败--错误信息如下:' + request.responseText);
+								//										layer.msg("删除失败！\n错误信息在控制台中打印,请与管理员联系!", {
+								//											icon: 5,
+								//											time: 0,
+								//											btn: ['OK'],
+								//											yes: function(index) {
+								//												layer.close(index);
+								//											}
+								//										});
+								//									}
+								//								});
+							}
+						});
+
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

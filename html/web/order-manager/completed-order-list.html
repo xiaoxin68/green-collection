@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="../../../tools/layui/css/layui.css" />
+		<script src="../../../tools/jquery/jquery-3.3.1.min.js"></script>
+		<!--<script src="../js/jquery.min.js"></script>-->
+		<title>已完成订单</title>
+		<style>
+
+		</style>
+	</head>
+	<style>
+		.z_table{
+			width: 95%;
+			margin: 0 auto;
+		}
+	</style>
+	<body style="width: 95%;margin: 0 auto;">
+
+		<!--显示商品列表-->
+		<table class="layui-table z_table" id="displayTable" lay-filter="tableFilter">
+		</table>
+
+		<script src="../../../tools/layui/layui.all.js"></script>
+		<script type="text/html" id="exhibitsDetail">
+			<button onclick="showDetail(this)" value="{{d.id}}" class="layui-btn layui-btn-warm">详情</button>
+		</script>
+
+		<script type="text/html" id="paidStatus">
+			{{# if(d.isPaid == true){ }}
+			<i class="layui-icon" style="color: #1E9FFF;">&#x1005;已支付</i> {{# } }} 
+			{{# if(d.isPaid == false){ }}
+			<i class="layui-icon">&#xe606;未支付</i> {{# } }} 
+		</script>
+
+		<script type="text/javascript">
+			layui.use(['layer', 'table', 'element'], function() {
+				var layer = layui.layer;
+				var table = layui.table;
+				var elememt = layui.element;
+				//        $ = layer.$;
+				
+				table.render({
+            		elem: '#displayTable' //指定原始表格元素选择器
+            		, url: 'http://192.168.1.107:9009/manager/listOrders/1'
+		            , height: 'full-50'
+        		    , skin: 'nob' //行边框风格
+            		, even: true, //开启隔行背景
+            		cols: [[//id,exhibitsName,category,mainPhotoPath,intro,creatTime
+                		{field: 'orderId', title: 'ID', width: '13%', sort: true},
+		                {field: 'recyclerId', title: '回收员ID', width: '20%'},
+        		        {field: 'userId', title: '用户ID', width: '15%'},
+                		{field: 'isPaid', title: '已付款', width: '10%', templet:'#paidStatus'},
+		                {field: 'createTime', title: '创建时间', width: '20%', sort: true},
+		                {field: 'orderAmount', title: '金额', width: "10%"},
+		                {field: 'description', title: '备注', width: '10%'}
+		            ]],
+        		    page: true,
+            		request: {
+		                pageName: 'page' //页码的参数名称，默认：page
+        		        , limitName: 'size' //每页数据量的参数名，默认：limit
+		            },
+        		    limit: 10,//每页默认显示数量
+            		limits: [10, 20, 30, 40, 50]
+		        });
+				
+			});
+		</script>
+	</body>
+
+</html>

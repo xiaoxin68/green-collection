@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="format-detection" content="telephone=no" />
+		<title>下订单</title>
+
+		<link rel="stylesheet" href="../../../tools/layui/css/layui.css" />
+		<link rel="stylesheet" href="../../../tools/layui/css/layui.mobile.css" />
+		<script type="text/javascript" src="../../../tools/layui/layui.js"></script>
+
+		<script type="text/javascript" src="../../../tools/jquery/jquery-3.3.1.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../../css/wechat/make_order.css" />
+
+	</head>
+
+	<body>
+		<ul class="layui-nav" lay-filter="">
+			<li class="layui-nav-item layui-this">
+				<a href="">首页</a>
+			</li>
+			<li class="layui-nav-item">
+				<a href="javascript:;">个人</a>
+				<dl class="layui-nav-child">
+					<!-- 二级菜单 -->
+					<dd>
+						<a href="">个人信息</a>
+					</dd>
+					<dd>
+						<a href="">订单信息</a>
+					</dd>
+					<dd>
+						<a href="">账户信息</a>
+					</dd>
+				</dl>
+			</li>
+			<li class="layui-nav-item">
+				<a href="">发起订单</a>
+			</li>
+		</ul>
+		<script>
+			//注意：导航 依赖 element 模块，否则无法进行功能性操作
+			layui.use('element', function() {
+				var element = layui.element;
+
+				//…
+			});
+		</script>
+
+		<form class="layui-form layui-container">
+			<div class="bag">
+				<div class="layui-form-item layui-row">
+					<div class="layui-col-xs4">
+						<select lay-verify="">
+							<option value="">垃圾分类</option>
+							<option value="one">1</option>
+							<option value="two">2</option>
+						</select>
+					</div>
+					<div class="layui-col-xs4">
+						<select lay-verify="">
+							<option value="">垃圾分类</option>
+							<option value="one">1</option>
+							<option value="two">2</option>
+						</select>
+					</div>
+					<div class="layui-col-xs4">
+						<input type="text" lay-verify="required" placeholder="重量/kg" class="layui-input" />
+					</div>
+				</div>
+			</div>
+			<div class="layui-row">
+				<div class="layui-col-xs12 add">
+					<button class="layui-btn layui-btn-normal" type="button">添加</button>
+				</div>
+			</div>
+		</form>
+
+		<script>
+			//Demo
+			layui.use('form', function() {
+				var form = layui.form;
+
+				//监听提交
+				form.on('submit(formDemo)', function(data) {
+					layer.msg(JSON.stringify(data.field));
+					return false;
+				});
+			});
+		</script>
+
+		<div class="layui-container">
+			<button type="button" class="layui-btn" id="test1">
+  				<i class="layui-icon">&#xe67c;</i>上传图片
+			</button>
+		</div>
+		
+		<script>
+			layui.use('upload', function() {
+				var upload = layui.upload;
+
+				//执行实例
+				var uploadInst = upload.render({
+					elem: '#test1' //绑定元素
+						,
+					url: '/upload/' //上传接口
+						,
+					done: function(res) {
+						//上传完毕回调
+					},
+					error: function() {
+						//请求异常回调
+					}
+				});
+			});
+		</script>
+		<script type="text/javascript" src="../../../js/wechat/make_order.js"></script>
+	</body>
+
+</html>

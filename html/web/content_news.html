@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="../../tools/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../css/web/content_news.css" />
+		<title>新闻管理</title>
+	</head>
+	<body>
+		<!--数据分页显示-->
+		<div class="z_table">
+			<table class="layui-hide" id="content_news" lay-filter="content_news_filter"></table>
+		</div>
+		
+		<!--日期格式化-->
+		<script type="text/html" id="createTimeTemplate">
+		  {{timestampToTime(d.createTime) }}
+		</script>
+		
+		<!--操作-->
+		<script type="text/html" id="barDemo">
+		  <a class="layui-btn layui-btn-xs" lay-event="detail">详情</a>
+		  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		</script>
+		<!--添加-->
+		<button class="layui-btn layui-btn-normal" id="z_button">添加</button>
+		
+	<script type="text/javascript" src="../../tools/layui/layui.js"></script>
+	<script type="text/javascript" src="../../tools/bootstrap/js/jquery-2.1.0.js" ></script>
+	<script type="text/javascript" src="../../js/web/content_news.js" ></script>
+	</body>
+</html>

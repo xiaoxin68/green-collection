@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="../../../tools/layui/css/layui.css" />
+		<script src="../../../tools/jquery/jquery-3.3.1.min.js"></script>
+		<!--<script src="../js/jquery.min.js"></script>-->
+		<title>待完成订单</title>
+		<style>
+
+		</style>
+	</head>
+
+	<body>
+
+		<form class="layui-form" action="">
+			<div class="layui-form-item">
+				<label class="layui-form-label">已接订单数</label>
+				<div class="layui-input-block">
+					<select id="orderCount" name="orderCount">
+						<option value=""></option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">距离</label>
+				<div class="layui-input-block">
+					<select id="distance" name="distance">
+						<option value=""></option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">回收员评价</label>
+				<div class="layui-input-block">
+					<select id="score" name="score">
+						<option value=""></option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="formSubmit">立即提交</button>
+					<button type="button" onclick="location.reload() ;" class="layui-btn layui-btn-primary">刷新</button>
+				</div>
+			</div>
+		</form>
+
+		<script src="../../../tools/layui/layui.all.js"></script>
+
+		<script type="text/javascript">
+			layui.use(['layer', 'table', 'element'], function() {
+				var layer = layui.layer;
+				var form = layui.form;
+
+				$.ajax({
+					type: "get",
+					url: "http://192.168.1.107:9009/manager/orderFactor/get",
+					async: true,
+					success: function(data) {
+						data = data.data;
+						setSelected(data.orderCountFactor, data.distanceFactor, data.scoreFactor, form);
+					}
+				});
+				//				setSelected(3,4,3,form);
+				form.on('submit(formSubmit)', function(data) {
+					console.log("test");
+					var orderCount = data.field.orderCount;
+					var distance = data.field.distance;
+					var score = data.field.score;
+
+					$.ajax({
+						type: "post",
+						url: "http://192.168.1.107:9009/manager/orderFactor/update",
+						async: false,
+						data: {
+							orderCountFactor: orderCount,
+							distanceFactor: distance,
+							scoreFactor: score
+						},
+						success: function(data) {
+							if(data.status == 0) {
+								
+								layer.msg('修改成功', {icon: 6});
+							} else {
+								layer.msg(data.message, {icon: 5});
+							}
+						}
+					});
+					return false;
+				});
+
+			});
+
+			function setSelected(orderCount, distance, score, form) {
+				var obj = $("#orderCount").children()[orderCount];
+				$(obj).attr("selected", true);
+				obj = $("#distance").children()[distance];
+				console.log(obj);
+				$(obj).attr("selected", true);
+				obj = $("#score").children()[score];
+				$(obj).attr("selected", true);
+				form.render();
+			}
+		</script>
+	</body>
+
+</html>

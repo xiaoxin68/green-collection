@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>废品列表</title>
+		<!-- for-mobile-apps -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="../../css/wechat/styleone.css" />
+		<link href="../../tools/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+		<!-- js -->
+		<script src="../../js/wechat/jquery.min.js"></script>
+		<script type="text/javascript" src="../../tools/bootstrap/js/jquery-2.1.0.js"></script>
+		<script type="text/javascript" src="../../tools/jquery/jquery.form.min.js"></script>
+		<script type="text/javascript" src="../../tools/common/js/vue.js"></script>
+	</head>
+
+	<body>
+		<div class="product">
+			<div class="container">
+				<div class="sellers animated wow fadeInUp" data-wow-delay=".5s">
+					<h3 class="best" style="background-color:deepskyblue" onclick="window.history.back(-1)" ;>废品列表</h3>
+					<div id="garbage" style="margin-top: 15px;">
+						<div class="panel-group" v-for="(items, index) in info">
+							<!--<div class="rows">
+								<div class="col-md-4" style="float: left;">
+									<img style="width: 70px;height:70px;" v-bind:src="[items.photoPath]" />
+								</div>
+								<div class="col-md-8" style="float: right;">
+									<div>
+										<h3>{{items.firstname}}</h3>
+									</div>
+									<div>
+										<p>{{items.description}}</p>
+									</div>
+								</div>
+							</div>-->
+							<div class="container-fluid">
+							<div class="row-fluid">
+								<div class="span4">
+									<img style="width: 100%;height:200px;" v-bind:src="[items.photoPath]" />
+									<!--<img  src="img/a.jpg" />-->
+								</div>
+								<div class="span8">
+									<h3>{{items.firstname}}</h3>
+									<p style="padding-top: 6px;">
+										{{items.description}}
+									</p>
+								</div>
+							</div>
+						</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			$(function() {
+				$.get("http://192.168.1.142:9000/garbage/queryFirstGarbageList",
+					function(data, status) {
+						new Vue({
+							el: '#garbage',
+							data: {
+								info: data
+							}
+						})
+					}
+				)
+			})
+		</script>
+	</body>
+
+</html>
